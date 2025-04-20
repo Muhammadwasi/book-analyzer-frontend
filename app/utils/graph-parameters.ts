@@ -1,5 +1,6 @@
+import { CharacterInteractions } from "../types/model";
 
-export const nodeCanvasObject = (node, ctx, globalScale) => {
+export const updateNodeCanvasObject = (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
   const label = node.id;
   const fontSize = 12 / globalScale;
   ctx.font = `${fontSize}px Sans-Serif`;
@@ -7,7 +8,7 @@ export const nodeCanvasObject = (node, ctx, globalScale) => {
   const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
 
   ctx.fillStyle = 'rgba(0, 0, 0)';
-  ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+  ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, bckgDimensions[0], bckgDimensions[1]);
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -17,7 +18,7 @@ export const nodeCanvasObject = (node, ctx, globalScale) => {
   node.__bckgDimensions = bckgDimensions;
 }
 
-export const linkCanvasObject = (link, ctx, globalScale) => {
+export const updateLinkCanvasObject = (link: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
   const label = String(link.value) || '';
   const start = link.source;
   const end = link.target;
@@ -68,7 +69,7 @@ export const linkCanvasObject = (link, ctx, globalScale) => {
   ctx.fillText(label, midX, midY);
 }
 
-export const linkLabel = (link) => link.value + " interactions between " + link.source.id + " and " + link.target.id
+export const buildLinkLabel = (link: any) => link.value + " interactions between " + link.source.id + " and " + link.target.id
 
 export const buildGraphData = (data: CharacterInteractions) => {
   const character_names: Set<string> = new Set();

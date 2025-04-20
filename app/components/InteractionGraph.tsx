@@ -2,7 +2,7 @@
 'use client'
 import React from 'react';
 import { CharacterInteractions } from '../types/model';
-import { buildGraphData, linkCanvasObject as updateLinkCanvasObject, linkLabel as buildLinkLabel, nodeCanvasObject as updateNodeCanvasObject } from '../utils/graph-parameters';
+import { buildGraphData, updateLinkCanvasObject, buildLinkLabel, updateNodeCanvasObject } from '../utils/graph-parameters';
 
 import dynamic from 'next/dynamic';
 

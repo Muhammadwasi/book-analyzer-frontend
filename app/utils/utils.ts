@@ -1,6 +1,6 @@
 import { AnalyzeResponse, CharacterInteractions, TaskStatus, TaskStatusResponse } from "../types/model";
 
-export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: string) => void, setStatus): Promise<void> => {
+export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: string) => void, setStatus: (status: TaskStatus) => void): Promise<void> => {
 
     if (!bookId) {
         return;
