@@ -39,7 +39,7 @@ const BookAnalyzer: React.FunctionComponent = () => {
               className="toggle toggle-primary" 
               checked={isMocked}
               onChange={({ target: { checked } }) => setIsMocked(checked)}/>
-            Mock LLM Response
+            Mock LLM
           </label>
       </div>
 
