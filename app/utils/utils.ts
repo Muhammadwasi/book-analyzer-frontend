@@ -1,3 +1,4 @@
+import { error } from "console";
 import { AnalyzeResponse, CharacterInteractions, TaskStatus, TaskStatusResponse } from "../types/model";
 
 export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: string) => void, setStatus: (status: TaskStatus) => void): Promise<void> => {
@@ -8,7 +9,7 @@ export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: 
 
     try {
         setStatus("in_progress")
-        const response: Response = await fetch('http://localhost:8000/analyze', {
+        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/analyze`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,6 +25,7 @@ export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: 
         setTaskId(data.task_id);
     } catch (error) {
         console.error('Error analyzing book:', error);
+        setStatus("error");
     }
 };
 
@@ -34,7 +36,7 @@ export const fetchTaskStatus = (taskId: string, setStatus: (status: TaskStatus) 
     const interval = setInterval(async () => {
         try {
             setStatus("in_progress")
-            const response = await fetch(`http://localhost:8000/status/${taskId}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/status/${taskId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch status');
             }
@@ -52,6 +54,7 @@ export const fetchTaskStatus = (taskId: string, setStatus: (status: TaskStatus) 
             }
         } catch (error) {
             console.error('Error fetching status:', error);
+            setStatus("error");
             clearInterval(interval);
         }
     }, 2000);
