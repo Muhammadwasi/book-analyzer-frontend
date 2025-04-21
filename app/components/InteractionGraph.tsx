@@ -14,15 +14,13 @@ interface CharacterGraphProps {
 
 const InteractionGraph: React.FunctionComponent<CharacterGraphProps> = ({ data }) => {
   return (
-    <div >
-      <ForceGraph2D
-        graphData={buildGraphData(data)}
-        nodeLabel="id"
-        linkLabel={(link) => buildLinkLabel(link)}
-        nodeCanvasObject={(node, ctx, globalScale) => updateNodeCanvasObject(node, ctx, globalScale)}
-        linkCanvasObject={(link, ctx, globalScale) => updateLinkCanvasObject(link, ctx, globalScale)}
-      />
-    </div>
+    <ForceGraph2D
+      graphData={buildGraphData(data)}
+      nodeLabel="id"
+      linkLabel={(link) => buildLinkLabel(link)}
+      nodeCanvasObject={(node, ctx, globalScale) => updateNodeCanvasObject(node, ctx, globalScale)}
+      linkCanvasObject={(link, ctx, globalScale) => updateLinkCanvasObject(link, ctx, globalScale)}
+    />
   );
 };
 

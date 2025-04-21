@@ -1,7 +1,6 @@
-import { error } from "console";
 import { AnalyzeResponse, CharacterInteractions, TaskStatus, TaskStatusResponse } from "../types/model";
 
-export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: string) => void, setStatus: (status: TaskStatus) => void): Promise<void> => {
+export const analyzeBook = async (bookId: number | undefined, isMocked: boolean,  setTaskId: (task: string) => void, setStatus: (status: TaskStatus) => void): Promise<void> => {
 
     if (!bookId) {
         return;
@@ -9,7 +8,12 @@ export const analyzeBook = async (bookId: number | undefined, setTaskId: (task: 
 
     try {
         setStatus("in_progress")
-        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/analyze`, {
+        const params = new URLSearchParams();
+        if (isMocked) {
+            params.append('mock', '1');
+        }
+
+        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/analyze?${params.toString()}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,9 +66,11 @@ export const fetchTaskStatus = (taskId: string, setStatus: (status: TaskStatus) 
     return () => clearInterval(interval);
 }
 
-export const updateBookId = (value: string, setBookId: (bookId: number) => void) => {
-    const parsedId = parseInt(value)
+export const updateBookId = (value: string, setBookId: (bookId: number | undefined) => void) => {
+    const parsedId = parseInt(value.trim())
     if (!Number.isNaN(parsedId)) {
         setBookId(parsedId)
+    } else {
+        setBookId(undefined)
     }
 }
